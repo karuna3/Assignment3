@@ -1,0 +1,75 @@
+---
+title: "Assignment3"
+author: "Karuna"
+date: "February 1, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+#1
+freshman_kgs<-read.csv(file = "C:\\Users\\karun\\OneDrive\\Documents\\freshman_kgs.csv", sep = ",", header = TRUE)
+hw_200<-read.csv(file = "C:\\Users\\karun\\OneDrive\\Documents\\hw_200.csv",sep = ",",header = TRUE)
+```
+
+```{r}
+#2
+
+#We can use either column number of column name
+September_Weight<-freshman_kgs[,2]
+September_Weight<-freshman_kgs[, colnames(freshman_kgs)[2]]
+
+September_bmi<-freshman_kgs[, colnames(freshman_kgs)[4]]
+September_bmi<-freshman_kgs[,4]
+```
+
+```{r}
+#3
+noofEntries<-0
+totalWeight<-0
+for(i in seq_along(September_Weight))
+{
+  totalWeight<-totalWeight+September_Weight[i]
+  noofEntries<-noofEntries+1
+}
+meanWeight<-totalWeight/noofEntries
+print(meanWeight)
+```
+
+```{r}
+#4
+noofEntries<-0
+total<-0
+func_mean<-function(value)
+{
+  noofEntries<<-noofEntries+1
+  total<<-total+value
+  
+  return (total/noofEntries)
+}
+
+for(i in seq_along(September_Weight))
+{
+  print(func_mean(September_Weight[i]))
+}
+```
+
+```{r}
+#5
+noofEntries<-0
+total<-0
+lapply(as.list(September_bmi), func_mean)
+print(paste("Total is ",total," and number of entries is ",noofEntries))
+print(paste("Average is ",total/noofEntries))
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
